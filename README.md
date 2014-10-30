@@ -7,7 +7,8 @@ With gvector you can create a list (with elements of different types) and make c
 ```r
 polynomial = poly.from.roots(c(1,2,3)) # take a polynomial
 value = 1.3 # take some value
-A = new.gvector(list(polynomial, value)) # make a vector out of them
-B = A*A # calculate !
+A = V(polynomial, value) # make a vector out of them
+# now, calculate !
+B = A*A
 C = diag(2) %*% A
 ```

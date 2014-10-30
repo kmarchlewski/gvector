@@ -38,9 +38,14 @@ new.gvector = function(vec=list(), dim=c())
   new("gvector",vec=vec, dim=dim);
 }
 
+#' Converts an object to gvector
+#' 
+#' @param vec Object to be converted
+#' @param dim Vector of dimensions (like dim in a matrix).
+#' @export
 as.gvector = function(vec=list(), dim=c())
 {
-  if (is.numeric(vec)) {
+  if (is.numeric(vec) | is.list(vec)) {
     if (missing(dim)) {
       new.gvector(vec)
     } else {
