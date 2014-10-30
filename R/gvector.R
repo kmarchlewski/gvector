@@ -6,13 +6,15 @@
 #' \code{\link{new.gvector}}.
 #'
 #' @docType package
-#' @name gvector
+#' @name gvector-package
+#' @rdname gvector-package
 NULL
 
 #' Generalized vector for R
 #' 
 #' @slot vec List of elements of the vector/matrix (elements can be of different types)
 #' @slot dim Vector of dimensions of the vector/matrix (prod(dim) = length(vec))
+#' @exportClass gvector
 gvector <- setClass("gvector", representation(vec="list",dim="vector"))
 
 #' Creates a gvector out of a list
