@@ -1,4 +1,4 @@
 library(testthat)
-library(rtemplate)
+library(gvector)
 
-test_check("rtemplate")
+test_check("gvector")
