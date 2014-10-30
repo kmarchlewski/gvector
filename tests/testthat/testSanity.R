@@ -1,4 +1,4 @@
-library(rtemplate)
+library(gvector)
 context("Simple sanity tests")
 
 test_that("Sanity 1", {
