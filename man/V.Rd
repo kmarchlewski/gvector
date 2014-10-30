@@ -5,6 +5,9 @@
 \usage{
 V(...)
 }
+\arguments{
+\item{...}{All the things to put in a gvector}
+}
 \description{
 Convinience function for creating a gvector
 }
