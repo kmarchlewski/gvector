@@ -1,5 +1,10 @@
 setClass("gvector", representation(vec="list",dim="vector"))
 
+#' Creates a gvector out of a list
+#' 
+#' @param vec List to be converted into a gvector
+#' @param dim Vector of dimensions (like dim in a matrix). You should ensure that prod(dim) = length(vec).
+#' @export
 new.gvector = function(vec=list(), dim=c())
 {
   if (missing(dim)) {
