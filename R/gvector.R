@@ -1,4 +1,19 @@
-setClass("gvector", representation(vec="list",dim="vector"))
+#' Package for generalized vector in R
+#' 
+#' Generalized vector is just a list, but with the arthmetic of a vector or a matrix
+#' 
+#' The only function you're likely to need from \pkg{gvector} is
+#' \code{\link{new.gvector}}.
+#'
+#' @docType package
+#' @name gvector
+NULL
+
+#' Generalized vector for R
+#' 
+#' @slot vec List of elements of the vector/matrix (elements can be of different types)
+#' @slot dim Vector of dimensions of the vector/matrix (prod(dim) = length(vec))
+gvector <- setClass("gvector", representation(vec="list",dim="vector"))
 
 #' Creates a gvector out of a list
 #' 
@@ -44,8 +59,6 @@ dim.gvector = function(x) x@dim
   if (prod(value) != length(x@vec)) stop("Wrong dimensions for this gvector")
   new("gvector",vec=x@vec, dim=value);
 }
-
-as.gvector(1:3)
 
 getGenericFun = function () 
 {
@@ -154,9 +167,6 @@ setMethod("sum", "gvector", function(x,...) {
   }
 })
 
-sum(V(1:3))
-
-
 setMethod("[", signature("gvector","numeric","missing"), function(x,i,j,...) {
   h = 1:length(x@vec)
   h = h[i]
@@ -177,7 +187,10 @@ setMethod("[[", signature("gvector","numeric"), function(x,i,...) {
   x@vec[[i]]
 })
 
-
+#' Generic function for evaluation
+#' 
+#' Evaluates a polynomial, function, etc.
+#' @export
 calc = function(object,x,...) {
   stop("Called generic calc")
 }
@@ -185,6 +198,10 @@ calc = function(object,x,...) {
 setGeneric("lag")
 setGeneric("calc")
 
+#' Apply lag to all elements of a gvector
+#' 
+#' Applied the lag functions to all elements of a gvector
+#' @param x gvector
 setMethod("lag",signature("gvector"), function(x, dx, drop=T,...) {
   dx = as.matrix(dx)
   w = expand.grid(i=1:length(x@vec),j=1:nrow(dx))
