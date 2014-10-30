@@ -1,5 +1,3 @@
-
-
 setClass("gvector", representation(vec="list",dim="vector"))
 
 new.gvector = function(vec=list(), dim=c())
@@ -35,15 +33,14 @@ as.gvector = function(vec=list(), dim=c())
   }
 }
 
-
 dim.gvector = function(x) x@dim
+
 "dim<-.gvector" = function(x,value) {
   if (prod(value) != length(x@vec)) stop("Wrong dimensions for this gvector")
   new("gvector",vec=x@vec, dim=value);
 }
 
 as.gvector(1:3)
-
 
 getGenericFun = function () 
 {
@@ -240,6 +237,7 @@ mat.prod.gvector.apply = function(x,y) {
     xdim
   )
 }
+
 mat.prod.gvector.other = function(x,y) mat.prod.gvector.apply(as.gvector(x),as.gvector(y))
 setMethod("%*%",signature("gvector","gvector"), mat.prod.gvector.apply)
 setMethod("%*%",signature("gvector","ANY"), mat.prod.gvector.other)
