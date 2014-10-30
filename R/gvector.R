@@ -229,7 +229,6 @@ mat.prod.gvector.apply = function(x,y) {
     i2 = 1
     j2 = y@dim[1]
   }
-  print(c(i1,j1,i2,j2))
   if (j1 != j2) stop("Non conforming matrices in %*%");
   w = expand.grid(i=1:i1,j=1:i2)
   w = lapply(1:nrow(w),function(i) w[i,,drop=F])
