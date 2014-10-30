@@ -127,6 +127,10 @@ print.gvector = function(object) {
 
 setMethod("show", "gvector", print.gvector)
 
+
+#' Convinience function for creating a gvector
+#' 
+#' @export
 V = function(...) {
   l = list(...)
   if (length(l) == 0) {
