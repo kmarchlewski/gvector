@@ -6,7 +6,9 @@ calc = function(object,x,...) {
   stop("Called generic calc")
 }
 
+#' @export
 setGeneric("lag")
+
 setGeneric("calc")
 
 #' Apply lag to all elements of a gvector

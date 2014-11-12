@@ -3,5 +3,6 @@
 export(V)
 export(as.gvector)
 export(calc)
+export(lag)
 export(new.gvector)
 exportClasses(gvector)
