@@ -24,7 +24,6 @@ getGenericFun = function ()
   fdef
 }
 
-
 Ops.gvector.apply = function(e1,e2,fun) {
   n1 = length(e1@vec)
   n2 = length(e2@vec)
@@ -71,13 +70,12 @@ print.gvector = function(object) {
 
 setMethod("show", "gvector", print.gvector)
 
-
 setMethod("sum", "gvector", function(x,...) {
   if (length(x@vec) > 0) {
     ret = x@vec[[1]];  
     if (length(x@vec) > 0) {
       for (i in 2:length(x@vec)) {
-        ret = ret + x@vec[[i]];	
+        ret = ret + x@vec[[i]];
       }
     }
     if (length(list(...)) > 0) {
@@ -114,8 +112,6 @@ setMethod("[[", signature("gvector","numeric"), function(x,i,...) {
   x@vec[[i]]
 })
 
-
-
 mat.prod.gvector.apply = function(x,y) {
   if (length(x@dim) > 1) {
     i1 = prod(x@dim[-length(x@dim)])
@@ -148,4 +144,20 @@ mat.prod.gvector.other = function(x,y) mat.prod.gvector.apply(as.gvector(x),as.g
 setMethod("%*%",signature("gvector","gvector"), mat.prod.gvector.apply)
 setMethod("%*%",signature("gvector","ANY"), mat.prod.gvector.other)
 setMethod("%*%",signature("ANY","gvector"), mat.prod.gvector.other)
+
+t.gvector = function(x){
+  if(length(x@dim)>2){
+    stop("Only matrixes and vectors can be transposed.")
+  }
+  else if(length(x@dim==1)){
+    l=length(x@vec)
+    new.gvector(x@vec,c(l,1))
+  }
+  else{
+    n=length(x@dim[1])
+    m=length(x@dim[2])
+    indexes = as.vector(t(matrix(seq(1,m*n),n,m)))
+    new.gvector(sapply(1:(n*m), function(i) x@vec[indexes[i]]),dim=c(m,n))
+  }
+}
 
