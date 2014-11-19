@@ -149,13 +149,13 @@ t.gvector = function(x){
   if(length(x@dim)>2){
     stop("Only matrixes and vectors can be transposed.")
   }
-  else if(length(x@dim==1)){
+  else if(length(x@dim)==1){
     l=length(x@vec)
     new.gvector(x@vec,c(l,1))
   }
   else{
-    n=length(x@dim[1])
-    m=length(x@dim[2])
+    n=x@dim[1]
+    m=x@dim[2]
     indexes = as.vector(t(matrix(seq(1,m*n),n,m)))
     new.gvector(sapply(1:(n*m), function(i) x@vec[indexes[i]]),dim=c(m,n))
   }
