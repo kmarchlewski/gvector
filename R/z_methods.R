@@ -1,6 +1,7 @@
 
 dim.gvector = function(x) x@dim
 
+#' @export
 "dim<-.gvector" = function(x,value) {
   if (prod(value) != length(x@vec)) stop("Wrong dimensions for this gvector")
   new("gvector",vec=x@vec, dim=value);
@@ -151,7 +152,7 @@ t.gvector = function(x){
   }
   else if(length(x@dim)==1){
     l=length(x@vec)
-    new.gvector(x@vec,c(l,1))
+    new.gvector(x@vec,c(1,l))
   }
   else{
     n=x@dim[1]
