@@ -146,6 +146,7 @@ setMethod("%*%",signature("gvector","gvector"), mat.prod.gvector.apply)
 setMethod("%*%",signature("gvector","ANY"), mat.prod.gvector.other)
 setMethod("%*%",signature("ANY","gvector"), mat.prod.gvector.other)
 
+#' @export
 t.gvector = function(x){
   if(length(x@dim)>2){
     stop("Only matrixes and vectors can be transposed.")
