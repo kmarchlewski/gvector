@@ -114,6 +114,25 @@ setMethod("[[", signature("gvector","numeric"), function(x,i,...) {
   x@vec[[i]]
 })
 
+#' @export
+setMethod("[<-", signature("gvector","numeric","missing","ANY"), function(x,i,j,value) {
+  if (class(value) != "gvector") {
+    value = as.gvector(value)
+  }
+  h = 1:length(x@vec)
+  h = h[i]
+  y=x;
+  if (length(h) == prod(dim(value))) {
+    
+    y@vec[h] = value@vec
+  } else {
+    if (prod(dim(value)) == 1)
+      for (i in h) y@vec[i] = value@vec[[1]]
+    else
+      stop("Wrong size in [<-.gvector")
+  }
+  assign(deparse(substitute(x)), y, parent.frame())
+})
 
 
 mat.prod.gvector.apply = function(x,y) {
