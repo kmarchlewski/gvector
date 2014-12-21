@@ -3,6 +3,7 @@
 export(V)
 export(as.gvector)
 export(calc)
+export(gapply)
 export(lag)
 export(make.gvector.generic)
 export(new.gvector)

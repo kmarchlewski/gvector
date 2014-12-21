@@ -43,9 +43,10 @@ calc.gvector.apply = function(object, x) {
 setMethod("calc",signature("gvector","numeric"), calc.gvector.apply)
 setMethod("calc",signature("gvector","array"), calc.gvector.apply)
 
-
-generic.gvector.apply = function(object, simplify=FALSE) {
-  ret = lapply(object@vec, getGenericFun())
+#' @export
+gapply = function(object, FUN, simplify=FALSE) {
+  FUN <- match.fun(FUN)
+  ret = lapply(object@vec, FUN)
   if (simplify) {
     dd = lapply(ret, function(x) {
       if (is.null(dim(x)))
@@ -67,6 +68,9 @@ generic.gvector.apply = function(object, simplify=FALSE) {
   }
   new("gvector", vec=ret, dim=object@dim)
 }
+
+
+generic.gvector.apply = function(object, simplify=FALSE) gapply(object, getGenericFun(), simplify=simplify)
 
 #' @export
 make.gvector.generic = function(fun) {
