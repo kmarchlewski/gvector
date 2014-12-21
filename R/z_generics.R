@@ -68,6 +68,7 @@ generic.gvector.apply = function(object, simplify=FALSE) {
   new("gvector", vec=ret, dim=object@dim)
 }
 
+#' @export
 make.gvector.generic = function(fun) {
   setMethod(fun, signature("gvector"), generic.gvector.apply)
 }
