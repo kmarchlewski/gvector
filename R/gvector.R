@@ -45,7 +45,7 @@ new.gvector = function(vec=list(), dim=c())
 #' @export
 as.gvector = function(vec=list(), dim=c())
 {
-  if (is.numeric(vec) | is.list(vec)) {
+  if (is.numeric(vec) | class(vec) == "list") {
     if (missing(dim)) {
       new.gvector(vec)
     } else {

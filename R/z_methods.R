@@ -64,7 +64,7 @@ setMethod("Ops", signature("gvector","ANY"), Ops.gvector.other)
 setMethod("Ops", signature("ANY","gvector"), Ops.gvector.other)
 
 print.gvector = function(object) {
-  tp = sapply(object@vec, class)
+  tp = sapply(object@vec, function(x) { class(x)[1] })
   dim(tp) = object@dim
   print(tp)
 }
