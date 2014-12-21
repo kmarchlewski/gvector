@@ -59,8 +59,9 @@ gapply = function(object, FUN, simplify=FALSE) {
       dd = dd[[1]]
       ret = do.call(c,lapply(ret,as.vector))      
       if (length(ret) != prod(dd,object@dim)) stop("Something went wrong with simplify")
-      if (prod(dd) == 1) dd = object@dim
-      if (prod(object@dim) != 1)
+      if (prod(dd) == 1)
+        dd = object@dim
+      else if (prod(object@dim) != 1)
         dd = c(object@dim,dd)
       dim(ret) = dd
       return (ret)
