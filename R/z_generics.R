@@ -44,9 +44,9 @@ setMethod("calc",signature("gvector","numeric"), calc.gvector.apply)
 setMethod("calc",signature("gvector","array"), calc.gvector.apply)
 
 #' @export
-gapply = function(object, FUN, simplify=FALSE) {
+gapply = function(object, FUN, ..., simplify=FALSE) {
   FUN <- match.fun(FUN)
-  ret = lapply(object@vec, FUN)
+  ret = lapply(object@vec, FUN, ...)
   if (simplify) {
     dd = lapply(ret, function(x) {
       if (is.null(dim(x)))

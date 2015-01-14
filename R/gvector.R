@@ -45,14 +45,14 @@ new.gvector = function(vec=list(), dim=c())
 #' @export
 as.gvector = function(vec=list(), dim=c())
 {
-  if (is.numeric(vec) | class(vec) == "list") {
+  if (is.numeric(vec) | all(class(vec) == "list")) {
     if (missing(dim)) {
       new.gvector(vec)
     } else {
       new.gvector(vec,dim=dim)
     }
   } else {
-    if (class(vec) == "gvector") {
+    if (all(class(vec) == "gvector")) {
       vec
     } else {
       new.gvector(list(vec))
@@ -73,7 +73,7 @@ V = function(...) {
     as.gvector(l[[1]])
   } else {
     l = lapply(l, function(e) {
-      if (class(e) != "gvector") e = as.gvector(e)
+      if (any(class(e) != "gvector")) e = as.gvector(e)
       if (length(e@dim) != 1) stop("can contacinate only 1D vectors")
       e
     })
@@ -84,4 +84,24 @@ V = function(...) {
     new.gvector(vec,dim)
   }
 }
+
+#' @export
+c.gvector = function(...,recursive=FALSE) {
+  l = list(...)
+  
+    l = lapply(l, function(e) {
+      if (any(class(e) != "gvector")) e = as.gvector(e)
+      if (length(e@dim) != 1) stop("can contacinate only 1D vectors")
+      e
+    })
+    vec = lapply(l, function(e) e@vec)
+    vec = do.call(c, vec)
+    dim = sapply(l, function(e) e@dim)
+    dim = sum(dim)
+    new.gvector(vec,dim) 
+}
+
+#' @export
+length.gvector = function(x) length(x@vec)
+
 
