@@ -69,9 +69,10 @@ print.gvector = function(object) {
   print(tp)
 }
 
+#' @export
 setMethod("show", "gvector", print.gvector)
 
-
+#' @export
 setMethod("sum", "gvector", function(x,...) {
   if (length(x@vec) > 0) {
     ret = x@vec[[1]];  
@@ -94,6 +95,7 @@ setMethod("sum", "gvector", function(x,...) {
   }
 })
 
+#' @export
 setMethod("[", signature("gvector","numeric","missing"), function(x,i,j,...) {
   h = 1:length(x@vec)
   h = h[i]
@@ -101,6 +103,15 @@ setMethod("[", signature("gvector","numeric","missing"), function(x,i,j,...) {
   new.gvector(x@vec[h],ndim)
 })
 
+#' @export
+setMethod("[", signature("gvector","logical","missing"), function(x,i,j,...) {
+  h = 1:length(x@vec)
+  h = h[i]
+  ndim = length(h);
+  new.gvector(x@vec[h],ndim)
+})
+
+#' @export
 setMethod("[", signature("gvector","numeric","numeric"), function(x,i,j,...,drop=F) {
   h = 1:length(x@vec)
   dim(h) = x@dim
@@ -110,6 +121,7 @@ setMethod("[", signature("gvector","numeric","numeric"), function(x,i,j,...,drop
   new.gvector(x@vec[as.vector(h)],ndim)
 })
 
+#' @export
 setMethod("[[", signature("gvector","numeric"), function(x,i,...) {
   x@vec[[i]]
 })
