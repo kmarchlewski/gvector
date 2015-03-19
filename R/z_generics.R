@@ -23,7 +23,7 @@ setMethod("lag",signature("gvector"), function(x, dx, drop=T,...) {
   if ((xdim[1] == 1)&&(drop)) xdim=xdim[-1]
   new.gvector(
     lapply(w,function(a) {
-      lag( x@vec[[a$i]], dx[a$j])
+      lag( x@vec[[a$i]], dx[a$j,])
     }),
     c(xdim, nrow(dx))
   )
