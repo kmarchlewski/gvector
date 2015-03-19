@@ -1,6 +1,7 @@
 
 dim.gvector = function(x) x@dim
 
+#' @export
 "dim<-.gvector" = function(x,value) {
   if (prod(value) != length(x@vec)) stop("Wrong dimensions for this gvector")
   new("gvector",vec=x@vec, dim=value);
@@ -23,7 +24,6 @@ getGenericFun = function ()
   fdef <- get(fname, envir = envir)
   fdef
 }
-
 
 Ops.gvector.apply = function(e1,e2,fun) {
   n1 = length(e1@vec)
@@ -78,7 +78,7 @@ setMethod("sum", "gvector", function(x,...) {
     ret = x@vec[[1]];  
     if (length(x@vec) > 0) {
       for (i in 2:length(x@vec)) {
-        ret = ret + x@vec[[i]];	
+        ret = ret + x@vec[[i]];
       }
     }
     if (length(list(...)) > 0) {
@@ -203,4 +203,21 @@ mat.prod.gvector.other = function(x,y) mat.prod.gvector.apply(as.gvector(x),as.g
 setMethod("%*%",signature("gvector","gvector"), mat.prod.gvector.apply)
 setMethod("%*%",signature("gvector","ANY"), mat.prod.gvector.other)
 setMethod("%*%",signature("ANY","gvector"), mat.prod.gvector.other)
+
+#' @export
+t.gvector = function(x){
+  if(length(x@dim)>2){
+    stop("Only matrixes and vectors can be transposed.")
+  }
+  else if(length(x@dim)==1){
+    l=length(x@vec)
+    new.gvector(x@vec,c(1,l))
+  }
+  else{
+    n=x@dim[1]
+    m=x@dim[2]
+    indexes = as.vector(t(matrix(seq(1,m*n),n,m)))
+    new.gvector(sapply(1:(n*m), function(i) x@vec[indexes[i]]),dim=c(m,n))
+  }
+}
 

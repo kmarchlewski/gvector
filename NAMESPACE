@@ -2,6 +2,8 @@
 
 S3method(c,gvector)
 S3method(length,gvector)
+S3method("dim<-",gvector)
+S3method(t,gvector)
 export(V)
 export(as.gvector)
 export(calc)
