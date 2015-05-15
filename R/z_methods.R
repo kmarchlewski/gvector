@@ -76,7 +76,7 @@ setMethod("show", "gvector", print.gvector)
 setMethod("sum", "gvector", function(x,...) {
   if (length(x@vec) > 0) {
     ret = x@vec[[1]];  
-    if (length(x@vec) > 0) {
+    if (length(x@vec) > 1) {
       for (i in 2:length(x@vec)) {
         ret = ret + x@vec[[i]];
       }
