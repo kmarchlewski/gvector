@@ -244,3 +244,32 @@ t.gvector = function(x){
   }
 }
 
+#' @export
+solve.gvector = function(x) { # simple Gauss elimination algorithm
+  d = dim(x)
+  if (length(d) != 2) stop("x have to be a matrix in solve")
+  if (d[1] != d[2]) stop("x have to be a square matrxint in solve")
+  n = d[1]
+  ret = V(diag(nrow=d))
+  print(n)
+  for (i in seq_len(n))
+  {
+    w = x[i,i] ^ -1
+    #    print(ToC(x))
+    #    print(ToC(ret))
+    for (j in seq_len(n)) {
+      x[i,j] = x[i,j] * w
+      ret[i,j] = ret[i,j] * w
+    }
+    for( k in seq_len(n-i) + i)
+    {
+      w = x[k,i]
+      for (j in seq_len(n)) {
+        x[k,j] = x[k,j] - x[i,j] * w
+        ret[k,j] = ret[k,j] - ret[i,j] * w
+      }
+    }
+  }
+  print(ToC(x))
+  ret
+}
