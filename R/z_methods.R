@@ -76,7 +76,7 @@ setMethod("show", "gvector", print.gvector)
 setMethod("sum", "gvector", function(x,...) {
   if (length(x@vec) > 0) {
     ret = x@vec[[1]];  
-    if (length(x@vec) > 0) {
+    if (length(x@vec) > 1) {
       for (i in 2:length(x@vec)) {
         ret = ret + x@vec[[i]];
       }
@@ -170,6 +170,29 @@ setMethod("[<-", signature("gvector","logical","missing","ANY"), function(x,i,j,
   assign(deparse(substitute(x)), y, parent.frame())
 })
 
+#' @export
+setMethod("[<-", signature("gvector","numeric","numeric","ANY"), function(x,i,j,value) {
+  if (class(value) != "gvector") {
+    value = as.gvector(value)
+  }
+  h = 1:length(x@vec)
+  dim(h) = dim(x)
+  h = h[i,j]
+  h = as.vector(h)
+  y=x;
+  if (length(h) == prod(dim(value))) {
+    
+    y@vec[h] = value@vec
+  } else {
+    if (prod(dim(value)) == 1)
+    {
+      for (i in h) y@vec[[i]] = value@vec[[1]]
+    }
+    else
+      stop("Wrong size in [<-.gvector")
+  }
+  assign(deparse(substitute(x)), y, parent.frame())
+})
 
 mat.prod.gvector.apply = function(x,y) {
   if (length(x@dim) > 1) {
@@ -221,3 +244,32 @@ t.gvector = function(x){
   }
 }
 
+#' @export
+solve.gvector = function(x) { # simple Gauss elimination algorithm
+  d = dim(x)
+  if (length(d) != 2) stop("x have to be a matrix in solve")
+  if (d[1] != d[2]) stop("x have to be a square matrxint in solve")
+  n = d[1]
+  ret = V(diag(nrow=d))
+  print(n)
+  for (i in seq_len(n))
+  {
+    w = x[i,i] ^ -1
+    #    print(ToC(x))
+    #    print(ToC(ret))
+    for (j in seq_len(n)) {
+      x[i,j] = x[i,j] * w
+      ret[i,j] = ret[i,j] * w
+    }
+    for( k in seq_len(n-i) + i)
+    {
+      w = x[k,i]
+      for (j in seq_len(n)) {
+        x[k,j] = x[k,j] - x[i,j] * w
+        ret[k,j] = ret[k,j] - ret[i,j] * w
+      }
+    }
+  }
+  print(ToC(x))
+  ret
+}
